@@ -4,7 +4,7 @@
 
 不包含数据、checkpoint、图片视频、历史报告、运行结果、环境或认证文件。只保留这份说明、方法配置、必要测试和最小接入示例。本仓库发布独立的方法版，消融项目单独维护。
 
-## 1. 使用对方现有环境
+## 1. 使用现有环境
 
 先激活已有的 **PyTorch** 训练环境，再安装方法代码：
 
@@ -28,7 +28,7 @@ python -m pytest
 
 Stage 1 的 teacher 归一化只拟合训练 episode，留出集不参与拟合；历史重建只查询已经观测且早于当前时刻的历史。Stage 2 保留完整小记忆 merge 图，动作损失和辅助损失都可更新 writer/shared reader。关闭辅助损失时，记忆仍通过动作损失更新。
 
-## 3. 对方只需接入已有数据和模型
+## 3. 只需接入已有数据和模型
 
 ```bash
 cp examples/adapter_template.py r2mem_adapter.py
