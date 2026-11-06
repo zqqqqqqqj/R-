@@ -1,0 +1,36 @@
+format_version: 1
+adapter: examples.synthetic:build_adapter
+seed: 11
+teacher_fit_frames: 32
+max_queries: 4
+memory:
+  slots: 2
+  residual_dim: 4
+  query_dim: 8
+  read_dim: 4
+  hidden_dim: 16
+  storage_dtype: float32
+stage1:
+  steps: 12
+  batch_size: 2
+  lr: 0.01
+  max_grad_norm: 1.0
+  min_validation_gain: 0.0
+  validation_samples: 4
+  validate_every: 4
+  save_every: 4
+  log_every: 4
+stage2:
+  steps: 4
+  batch_size: 2
+  backbone_lr: 0.001
+  memory_lr: 0.001
+  interface_lr: 0.001
+  warmup_steps: 1
+  max_grad_norm: 1.0
+  history_weight: 0.1
+  ema_decay: 0.9
+  validation_samples: 2
+  validate_every: 2
+  save_every: 2
+  log_every: 2

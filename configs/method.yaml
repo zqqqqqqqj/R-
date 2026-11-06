@@ -1,0 +1,40 @@
+# Fill in an adapter to your existing data loader and PyTorch action model.
+# No robot paths, camera names, state/action dimensions or base-model version are assumed.
+format_version: 1
+adapter: your_project.r2mem_adapter:build_adapter
+seed: 11
+teacher_fit_frames: 16384
+max_queries: 32
+memory:
+  slots: 8
+  residual_dim: 128
+  query_dim: 256
+  read_dim: 128
+  hidden_dim: 256
+  storage_dtype: bfloat16
+  merge_rule: ward
+  teacher_seed: 20261016
+stage1:
+  steps: 60000
+  batch_size: 4
+  lr: 0.0001
+  max_grad_norm: 1.0
+  min_validation_gain: 0.01
+  validation_samples: 32
+  validate_every: 250
+  save_every: 2000
+  log_every: 100
+stage2:
+  steps: 30000
+  batch_size: 64
+  backbone_lr: 0.00005
+  memory_lr: 0.00002
+  interface_lr: 0.0001
+  warmup_steps: 3000
+  max_grad_norm: 1.0
+  history_weight: 0.1
+  ema_decay: 0.999
+  validation_samples: 32
+  validate_every: 2000
+  save_every: 2000
+  log_every: 100
