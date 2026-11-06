@@ -102,8 +102,6 @@ python scripts/train_stage2.py --config examples/synthetic.yaml \
 
 ## 6. checkpoint / Hugging Face
 
-代码仓库不上传任何权重。需要共享权重时，上传训练产物的 `final/` 到 Hugging Face，而不是整个 `runs/`：
-
 - `stage1/final/`：`memory.safetensors` + `config.json`。包含可复用的记忆和固定 teacher 状态，不含动作底座、optimizer、RNG 或原始数据。
 - `stage2/final/`：EMA `backbone.safetensors`、`receiver.safetensors`、`memory/` 和 `config.json`。含完整方法权重；使用方仍需其 native 架构、输入/输出 transforms 和动作归一化资产。
 - `checkpoints/`：本地精确续训状态，不属于默认公开权重包。权重文件与训练状态分开保存。
@@ -116,4 +114,4 @@ policy, metadata = load_action_model("runs/stage2/final", adapter, device="cuda:
 # 用 policy.augment_prefix(sample) 得到带记忆的 prefix，再调用自己的 native 推理接口。
 ```
 
-加载器校验架构/版本与文件 SHA；Stage 2 额外检查 Stage 1 的数据/预处理身份、划分、预算、seed 和重建验收。HF 下载到其他机器后使用本地相对路径，不绑定作者机器的绝对路径。模型卡应由权重发布者补充实际底座、数据来源、normalizer/transform 资产、训练配置及实测结果。
+加载器校验架构/版本与文件 SHA；Stage 2 额外检查 Stage 1 的数据/预处理身份、划分、预算、seed 和重建验收。模型卡应由权重发布者补充实际底座、数据来源、normalizer/transform 资产、训练配置及实测结果。
